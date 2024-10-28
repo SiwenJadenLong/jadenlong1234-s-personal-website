@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)https://jadenlong.neocities.org/not_found -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="module" id="truffle-injected" data-runtime="bkkjeefjfjcfdfifddmkdmcpmaakmelp" src="chrome-extension://bkkjeefjfjcfdfifddmkdmcpmaakmelp/contexts/all/injected-script/index.js"></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Found</title>
+    <link href="./Not Found_files/style.css" rel="stylesheet" type="text/css" media="all">
+  <style type="text/css" id="operaUserStyle"></style><style id="cultivate-overlay-button">.cultivate-overlay-button-container {
+  all: revert;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 1px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.cultivate-overlay-button {
+  all: revert;
+  position: absolute;
+  background-color: #4286F5;
+  color: white;
+  top: 10px;
+  right: 0px;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px 0 0 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: all;
+  overflow: hidden
+}
+
+.cultivate-overlay-button-img-wrapper {
+  all: revert;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+}
+
+.cultivate-overlay-button-img-wrapper img {
+  width: 42px;
+  height: auto;
+}
+
+.cultivate-overlay-button-grab {
+  all: revert;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+}
+
+.cultivate-overlay-button-grab:hover {
+  cursor: move;
+}
+
+.cultivate-overlay-button-arrow {
+  all: revert;
+  position: absolute;
+  opacity: 0.7;
+  line-height: 0;
+}
+
+.cultivate-overlay-button-arrow:hover {
+  opacity: 1;
+}
+
+.cultivate-overlay-button-arrow svg {
+  all: revert;
+  display: inline-block;
+}
+
+.cultivate-overlay-button-up {
+  top: 2px;
+  right: 2px;
+  padding: 2px 2px 4px 4px;
+}
+
+.cultivate-overlay-button-down {
+  bottom: 2px;
+  right: 2px;
+  padding: 4px 2px 2px 4px;
+}
+
+</style><script id="PreMiD_VariableGetter" type="text/javascript">window.pmdVariableGetter = async function Lh(){return(()=>{function safeStringifyReplacer(seen) {
+	return function (key, value) {
+		// Handle objects with a custom `.toJSON()` method.
+		if (typeof value?.toJSON === 'function') {
+			value = value.toJSON();
+		}
+
+		if (!(value !== null && typeof value === 'object')) {
+			return value;
+		}
+
+		if (seen.has(value)) {
+			return '[Circular]';
+		}
+
+		seen.add(value);
+
+		const newValue = Array.isArray(value) ? [] : {};
+
+		for (const [key2, value2] of Object.entries(value)) {
+			newValue[key2] = safeStringifyReplacer(seen)(key2, value2);
+		}
+
+		seen.delete(value);
+
+		return newValue;
+	};
+}
+
+function safeStringify(object, {indentation} = {}) {
+	const seen = new WeakSet();
+	return JSON.stringify(object, safeStringifyReplacer(seen), indentation);
+}
+
+const isObject = value => {
+	const type = typeof value;
+	return value !== null && (type === 'object' || type === 'function');
+};
+
+const isEmptyObject = value => isObject(value) && Object.keys(value).length === 0;
+
+const disallowedKeys = new Set([
+	'__proto__',
+	'prototype',
+	'constructor',
+]);
+
+const digits = new Set('0123456789');
+
+function getPathSegments(path) {
+	const parts = [];
+	let currentSegment = '';
+	let currentPart = 'start';
+	let isIgnoring = false;
+
+	for (const character of path) {
+		switch (character) {
+			case '\\': {
+				if (currentPart === 'index') {
+					throw new Error('Invalid character in an index');
+				}
+
+				if (currentPart === 'indexEnd') {
+					throw new Error('Invalid character after an index');
+				}
+
+				if (isIgnoring) {
+					currentSegment += character;
+				}
+
+				currentPart = 'property';
+				isIgnoring = !isIgnoring;
+				break;
+			}
+
+			case '.': {
+				if (currentPart === 'index') {
+					throw new Error('Invalid character in an index');
+				}
+
+				if (currentPart === 'indexEnd') {
+					currentPart = 'property';
+					break;
+				}
+
+				if (isIgnoring) {
+					isIgnoring = false;
+					currentSegment += character;
+					break;
+				}
+
+				if (disallowedKeys.has(currentSegment)) {
+					return [];
+				}
+
+				parts.push(currentSegment);
+				currentSegment = '';
+				currentPart = 'property';
+				break;
+			}
+
+			case '[': {
+				if (currentPart === 'index') {
+					throw new Error('Invalid character in an index');
+				}
+
+				if (currentPart === 'indexEnd') {
+					currentPart = 'index';
+					break;
+				}
+
+				if (isIgnoring) {
+					isIgnoring = false;
+					currentSegment += character;
+					break;
+				}
+
+				if (currentPart === 'property') {
+					if (disallowedKeys.has(currentSegment)) {
+						return [];
+					}
+
+					parts.push(currentSegment);
+					currentSegment = '';
+				}
+
+				currentPart = 'index';
+				break;
+			}
+
+			case ']': {
+				if (currentPart === 'index') {
+					parts.push(Number.parseInt(currentSegment, 10));
+					currentSegment = '';
+					currentPart = 'indexEnd';
+					break;
+				}
+
+				if (currentPart === 'indexEnd') {
+					throw new Error('Invalid character after an index');
+				}
+
+				// Falls through
+			}
+
+			default: {
+				if (currentPart === 'index' && !digits.has(character)) {
+					throw new Error('Invalid character in an index');
+				}
+
+				if (currentPart === 'indexEnd') {
+					throw new Error('Invalid character after an index');
+				}
+
+				if (currentPart === 'start') {
+					currentPart = 'property';
+				}
+
+				if (isIgnoring) {
+					isIgnoring = false;
+					currentSegment += '\\';
+				}
+
+				currentSegment += character;
+			}
+		}
+	}
+
+	if (isIgnoring) {
+		currentSegment += '\\';
+	}
+
+	switch (currentPart) {
+		case 'property': {
+			if (disallowedKeys.has(currentSegment)) {
+				return [];
+			}
+
+			parts.push(currentSegment);
+
+			break;
+		}
+
+		case 'index': {
+			throw new Error('Index was not closed');
+		}
+
+		case 'start': {
+			parts.push('');
+
+			break;
+		}
+		// No default
+	}
+
+	return parts;
+}
+
+function isStringIndex(object, key) {
+	if (typeof key !== 'number' && Array.isArray(object)) {
+		const index = Number.parseInt(key, 10);
+		return Number.isInteger(index) && object[index] === object[key];
+	}
+
+	return false;
+}
+
+function assertNotStringIndex(object, key) {
+	if (isStringIndex(object, key)) {
+		throw new Error('Cannot use string index');
+	}
+}
+
+function getProperty(object, path, value) {
+	if (!isObject(object) || typeof path !== 'string') {
+		return value === undefined ? object : value;
+	}
+
+	const pathArray = getPathSegments(path);
+	if (pathArray.length === 0) {
+		return value;
+	}
+
+	for (let index = 0; index < pathArray.length; index++) {
+		const key = pathArray[index];
+
+		if (isStringIndex(object, key)) {
+			object = index === pathArray.length - 1 ? undefined : null;
+		} else {
+			object = object[key];
+		}
+
+		if (object === undefined || object === null) {
+			// `object` is either `undefined` or `null` so we want to stop the loop, and
+			// if this is not the last bit of the path, and
+			// if it didn't return `undefined`
+			// it would return `null` if `object` is `null`
+			// but we want `get({foo: null}, 'foo.bar')` to equal `undefined`, or the supplied value, not `null`
+			if (index !== pathArray.length - 1) {
+				return value;
+			}
+
+			break;
+		}
+	}
+
+	return object === undefined ? value : object;
+}
+
+function setProperty(object, path, value) {
+	if (!isObject(object) || typeof path !== 'string') {
+		return object;
+	}
+
+	const root = object;
+	const pathArray = getPathSegments(path);
+
+	for (let index = 0; index < pathArray.length; index++) {
+		const key = pathArray[index];
+
+		assertNotStringIndex(object, key);
+
+		if (index === pathArray.length - 1) {
+			object[key] = value;
+		} else if (!isObject(object[key])) {
+			object[key] = typeof pathArray[index + 1] === 'number' ? [] : {};
+		}
+
+		object = object[key];
+	}
+
+	return root;
+}
+
+function deleteProperty(object, path) {
+	if (!isObject(object) || typeof path !== 'string') {
+		return false;
+	}
+
+	const pathArray = getPathSegments(path);
+
+	for (let index = 0; index < pathArray.length; index++) {
+		const key = pathArray[index];
+
+		assertNotStringIndex(object, key);
+
+		if (index === pathArray.length - 1) {
+			delete object[key];
+			return true;
+		}
+
+		object = object[key];
+
+		if (!isObject(object)) {
+			return false;
+		}
+	}
+}
+
+function hasProperty(object, path) {
+	if (!isObject(object) || typeof path !== 'string') {
+		return false;
+	}
+
+	const pathArray = getPathSegments(path);
+	if (pathArray.length === 0) {
+		return false;
+	}
+
+	for (const key of pathArray) {
+		if (!isObject(object) || !(key in object) || isStringIndex(object, key)) {
+			return false;
+		}
+
+		object = object[key];
+	}
+
+	return true;
+}
+
+// TODO: Backslashes with no effect should not be escaped
+function escapePath(path) {
+	if (typeof path !== 'string') {
+		throw new TypeError('Expected a string');
+	}
+
+	return path.replaceAll(/[\\.[]/g, '\\// ! PREMID_DEPENDENCIES -- @preserve');
+}
+
+// The keys returned by Object.entries() for arrays are strings
+function entries(value) {
+	const result = Object.entries(value);
+	if (Array.isArray(value)) {
+		return result.map(([key, value]) => [Number(key), value]);
+	}
+
+	return result;
+}
+
+function stringifyPath(pathSegments) {
+	let result = '';
+
+	for (let [index, segment] of entries(pathSegments)) {
+		if (typeof segment === 'number') {
+			result += `[${segment}]`;
+		} else {
+			segment = escapePath(segment);
+			result += index === 0 ? segment : `.${segment}`;
+		}
+	}
+
+	return result;
+}
+
+function * deepKeysIterator(object, currentPath = []) {
+	if (!isObject(object) || isEmptyObject(object)) {
+		if (currentPath.length > 0) {
+			yield stringifyPath(currentPath);
+		}
+
+		return;
+	}
+
+	for (const [key, value] of entries(object)) {
+		yield * deepKeysIterator(value, [...currentPath, key]);
+	}
+}
+
+function deepKeys(object) {
+	return [...deepKeysIterator(object)];
+}
+
+window.addEventListener("pmdGetPageVariable",t=>{let n=!1;const e=JSON.parse(t.detail);if(!e.nonce||!(e.variable||e.variables))return;const i={nonce:e.nonce};e.variables?(i.variables=e.variables.reduce((r,s)=>(r[s]=hasProperty(window,s)?getProperty(window,s):void 0,typeof r[s]=="object"&&(n=!0),r),{}),n&&(i.variables=JSON.parse(safeStringify(i.variables)))):i.variable=JSON.parse(JSON.stringify(window[e.variable])),window.dispatchEvent(new CustomEvent("pmdPageVariable",{detail:i}))})})()};pmdVariableGetter();</script></head>
+  <body>
+    <h1>Page Not Found</h1>
+    <p>The requested page was not found.</p>
+  
+
+</body><script type="text/javascript" id="useragent-switcher">navigator.__defineGetter__("userAgent", function() {return "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.9 Safari/537.36"})</script></html>
